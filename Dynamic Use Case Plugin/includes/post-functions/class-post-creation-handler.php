@@ -73,25 +73,37 @@ class Post_Creation_Handler
             }
 
             // Create a new post if it doesn't exist
-            $post_id = wp_insert_post(array(
-                'post_title' => $use_case->use_case_title,
-                'post_content' => $use_case->use_case_description,
-                'post_type' => 'use_case',
-                'post_status' => 'publish',
-                'meta_input' => array(
-                    'use_case_thumbnail_url' => $use_case->use_case_thumbnail_url,
-                    'use_case_image_url' => $use_case->use_case_image_url,
-                    'use_case_solution_text' => $use_case->use_case_solution_text,
-                    'use_case_result_text' => $use_case->use_case_result_text,
-                    'use_case_cta_text' => $use_case->use_case_cta_text,
-                    'use_case_category' => $use_case->use_case_category
-                )
-            ));
+            $excerpt = $use_case->use_case_excerpt;
+                $post_id = wp_insert_post(array(
+                    'post_title' => $use_case->use_case_title,
+                    'post_content' => $use_case->use_case_description,
+                    'post_excerpt' => $excerpt,
+                    'post_type' => 'use_case',
+                    'post_status' => 'publish',
+                    'meta_input' => array(
+                        'use_case_thumbnail_url' => $use_case->use_case_thumbnail_url,
+                        'use_case_image_url' => $use_case->use_case_image_url,
+                        'use_case_solution_text' => $use_case->use_case_solution_text,
+                        'use_case_result_text' => $use_case->use_case_result_text,
+                        'use_case_cta_text' => $use_case->use_case_cta_text,
+                        'use_case_category' => $use_case->use_case_category
+                    )
+                ));
 
             if (is_wp_error($post_id)) {
                 error_log('Error creating post: ' . $post_id->get_error_message());
                 continue;
             }
+             // Set the featured image
+             $thumbnail_url = $use_case->use_case_thumbnail_url;
+             if (!empty($thumbnail_url)) {
+                 $attachment_id = self::set_featured_image_from_url($thumbnail_url, $post_id);
+                 if (is_wp_error($attachment_id)) {
+                     error_log('Error setting featured image: ' . $attachment_id->get_error_message());
+                 } else {
+                     set_post_thumbnail($post_id, $attachment_id);
+                 }
+             }
 
             // Set the use case category
             $term_result = wp_set_post_terms($post_id, $use_case->use_case_category, 'use_case_categories');
@@ -112,6 +124,24 @@ class Post_Creation_Handler
 
         return rest_ensure_response(array('success' => true, 'message' => 'Use case posts processed successfully.'));
     }
+
+    /**
+ * Download an image from a URL and set it as the featured image for a post.
+ *
+ * @param string $image_url The URL of the image to download.
+ * @param int $post_id The ID of the post to attach the image to.
+ * @return int|WP_Error The attachment ID on success, WP_Error on failure.
+ */
+public static function set_featured_image_from_url($image_url, $post_id) {
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    require_once(ABSPATH . 'wp-admin/includes/file.php');
+    require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+    // Download the image and attach it to the post
+    $attachment_id = media_sideload_image($image_url, $post_id, null, 'id');
+
+    return $attachment_id;
+}
 
     /**
      * Update post meta for an existing post.
