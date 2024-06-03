@@ -5,6 +5,7 @@ namespace MyCustomPlugin;
 use WP_REST_Response;
 use WP_REST_Request;
 use WP_Error;
+
 class Table_Handler
 {
 
@@ -453,17 +454,18 @@ class Table_Handler
         $table_name = $wpdb->prefix . 'use_case_logs';
         return $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC");
     }
-    public static function update_post_meta_on_refresh() {
+    public static function update_post_meta_on_refresh()
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'use_cases';
-    
+
         $use_cases = $wpdb->get_results("SELECT * FROM $table_name");
-    
+
         if (empty($use_cases)) {
             error_log('No use cases found in the database.');
             return new WP_REST_Response('No use cases found.', 404);
         }
-    
+
         foreach ($use_cases as $use_case) {
             if (is_null($use_case->use_case_post_id)) {
                 // Check if the post already exists by title
@@ -476,12 +478,12 @@ class Table_Handler
                     self::update_post_meta($use_case, $existing_post_id);
                     continue;
                 }
-    
-                $excerpt = $use_case->use_case_excerpt;
+
+
                 $post_id = wp_insert_post(array(
                     'post_title' => $use_case->use_case_title,
                     'post_content' => $use_case->use_case_description,
-                    'post_excerpt' => $excerpt,
+                    'post_excerpt' => $use_case->use_case_excerpt,
                     'post_type' => 'use_case',
                     'post_status' => 'publish',
                     'meta_input' => array(
@@ -493,12 +495,12 @@ class Table_Handler
                         'use_case_category' => $use_case->use_case_category
                     )
                 ));
-    
+
                 if (is_wp_error($post_id)) {
                     error_log('Error creating post: ' . $post_id->get_error_message());
                     continue;
                 }
-    
+
                 // Set the use case category
                 $term_result = wp_set_post_terms($post_id, $use_case->use_case_category, 'use_case_categories');
                 if (is_wp_error($term_result)) {
@@ -506,7 +508,7 @@ class Table_Handler
                 } else {
                     error_log('Terms set successfully.');
                 }
-    
+
                 // Set the featured image
                 $thumbnail_url = $use_case->use_case_thumbnail_url;
                 if (!empty($thumbnail_url)) {
@@ -520,15 +522,14 @@ class Table_Handler
                 } else {
                     error_log('No thumbnail URL provided for use case ID: ' . $use_case->id);
                 }
-    
+
                 // Get permalink and update custom table
                 $permalink = get_permalink($post_id);
                 $wpdb->update($table_name, ['use_case_post_id' => $post_id, 'use_case_url' => $permalink], ['id' => $use_case->id]);
                 error_log("Use case post created: ID - $post_id, Title - {$use_case->use_case_title}");
-    
+
                 // Log the post creation
                 self::log_activity('create', $use_case->id, $post_id, 'Post created successfully.');
-    
             } else {
                 // Check if the post ID exists in the posts table
                 $post_exists = get_post_status($use_case->use_case_post_id);
@@ -537,29 +538,29 @@ class Table_Handler
                     self::update_post_meta($use_case, $use_case->use_case_post_id);
                     error_log('Post meta updated for use case ID: ' . $use_case->id);
                 } else {
+
                     // The post ID does not exist, create a new post
-                    $excerpt = $use_case->use_case_excerpt;
-                $post_id = wp_insert_post(array(
-                    'post_title' => $use_case->use_case_title,
-                    'post_content' => $use_case->use_case_description,
-                    'post_excerpt' => $excerpt,
-                    'post_type' => 'use_case',
-                    'post_status' => 'publish',
-                    'meta_input' => array(
-                        'use_case_thumbnail_url' => $use_case->use_case_thumbnail_url,
-                        'use_case_image_url' => $use_case->use_case_image_url,
-                        'use_case_solution_text' => $use_case->use_case_solution_text,
-                        'use_case_result_text' => $use_case->use_case_result_text,
-                        'use_case_cta_text' => $use_case->use_case_cta_text,
-                        'use_case_category' => $use_case->use_case_category
-                    )
-                ));
-    
+                    $post_id = wp_insert_post(array(
+                        'post_title' => $use_case->use_case_title,
+                        'post_content' => $use_case->use_case_description,
+                        'post_excerpt' => $use_case->use_case_excerpt,
+                        'post_type' => 'use_case',
+                        'post_status' => 'publish',
+                        'meta_input' => array(
+                            'use_case_thumbnail_url' => $use_case->use_case_thumbnail_url,
+                            'use_case_image_url' => $use_case->use_case_image_url,
+                            'use_case_solution_text' => $use_case->use_case_solution_text,
+                            'use_case_result_text' => $use_case->use_case_result_text,
+                            'use_case_cta_text' => $use_case->use_case_cta_text,
+                            'use_case_category' => $use_case->use_case_category
+                        )
+                    ));
+
                     if (is_wp_error($post_id)) {
                         error_log('Error creating post: ' . $post_id->get_error_message());
                         continue;
                     }
-    
+
                     // Set the use case category
                     $term_result = wp_set_post_terms($post_id, $use_case->use_case_category, 'use_case_categories');
                     if (is_wp_error($term_result)) {
@@ -567,7 +568,7 @@ class Table_Handler
                     } else {
                         error_log('Terms set successfully.');
                     }
-    
+
                     // Set the featured image
                     $thumbnail_url = $use_case->use_case_thumbnail_url;
                     if (!empty($thumbnail_url)) {
@@ -581,23 +582,23 @@ class Table_Handler
                     } else {
                         error_log('No thumbnail URL provided for use case ID: ' . $use_case->id);
                     }
-    
+
                     // Get permalink and update custom table
                     $permalink = get_permalink($post_id);
                     $wpdb->update($table_name, ['use_case_post_id' => $post_id, 'use_case_url' => $permalink], ['id' => $use_case->id]);
                     error_log("Use case post created: ID - $post_id, Title - {$use_case->use_case_title}");
-    
+
                     // Log the post creation
                     self::log_activity('create', $use_case->id, $post_id, 'Post created successfully.');
                 }
             }
         }
-    
+
         self::insert_log('Refresh Use Cases', 'Use cases refreshed successfully.');
         error_log('Use cases refreshed successfully.');
         return new WP_REST_Response(array('success' => true, 'message' => 'Use cases refreshed successfully.'), 200);
     }
-    
+
     /**
      * Download an image from a URL and set it as the featured image for a post.
      *
@@ -605,23 +606,24 @@ class Table_Handler
      * @param int $post_id The ID of the post to attach the image to.
      * @return int|WP_Error The attachment ID on success, WP_Error on failure.
      */
-    public static function set_featured_image_from_url($image_url, $post_id) {
+    public static function set_featured_image_from_url($image_url, $post_id)
+    {
         require_once(ABSPATH . 'wp-admin/includes/image.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/media.php');
-    
+
         // Download the image and attach it to the post
         $attachment_id = media_sideload_image($image_url, $post_id, null, 'id');
-    
+
         if (is_wp_error($attachment_id)) {
             error_log('Error downloading image: ' . $attachment_id->get_error_message());
         } else {
             error_log('Image downloaded successfully: ' . $attachment_id);
         }
-    
+
         return $attachment_id;
     }
-    
+
 
     /**
      * Update post meta for an existing post.
@@ -629,7 +631,8 @@ class Table_Handler
      * @param object $use_case The use case object.
      * @param int $post_id The post ID.
      */
-    private static function update_post_meta($use_case, $post_id = null) {
+    private static function update_post_meta($use_case, $post_id = null)
+    {
         $post_id = $post_id ?: $use_case->use_case_post_id;
 
         update_post_meta($post_id, 'use_case_thumbnail_url', $use_case->use_case_thumbnail_url);
@@ -637,7 +640,7 @@ class Table_Handler
         update_post_meta($post_id, 'use_case_solution_text', $use_case->use_case_solution_text);
         update_post_meta($post_id, 'use_case_result_text', $use_case->use_case_result_text);
         update_post_meta($post_id, 'use_case_cta_text', $use_case->use_case_cta_text);
-        wp_set_post_terms($post_id, $use_case->use_case_category, 'use_case_category');
+        wp_set_post_terms($post_id, 'use_case_category', $use_case->use_case_category);
     }
 }
 
@@ -650,5 +653,3 @@ add_action('rest_api_init', function () {
         }
     ));
 });
-
-
