@@ -1,0 +1,79 @@
+/* assets/css/use-cases.css */
+
+.UseCasesContainer {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.UseCasesTitle {
+    font-size: 36px;
+    color: #275B42;
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.UseCasesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.UseCaseCard {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.UseCaseThumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.UseCaseTitle {
+    font-size: 24px;
+    color: #275B42;
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.UseCaseExcerpt {
+    font-size: 16px;
+    color: #444B5B;
+    font-family: Roboto, sans-serif;
+    margin-bottom: 10px;
+}
+
+.UseCaseReadMore {
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #275B42;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.UseCaseReadMore:hover {
+    background-color: #1e4734;
+}
+
+@media (max-width: 768px) {
+    .UseCasesList {
+        flex-direction: column;
+    }
+}
