@@ -22,6 +22,13 @@ jQuery(document).ready(function ($) {
             console.error("Error loading model:", error);
         } finally {
             searchButton.prop('disabled', false).text('Search');
+            // Check if there's a query in the URL and perform the search
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            if (query) {
+                $('#tla-sear-search-term').val(query);
+                handleSearch();
+            }
         }
     }
 
@@ -136,6 +143,10 @@ jQuery(document).ready(function ($) {
             console.warn("Model not loaded or search term is empty.");
             return;
         }
+
+        // Update the URL with the search query without reloading the page
+        const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?query=${encodeURIComponent(searchTerm)}`;
+        window.history.pushState({ path: newUrl }, '', newUrl);
 
         searchButton.prop('disabled', true).text('Searching...');
 
