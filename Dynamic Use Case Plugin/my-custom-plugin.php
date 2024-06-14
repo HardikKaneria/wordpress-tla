@@ -2,7 +2,7 @@
 /*
 Plugin Name: Use Cases Management System
 Description: The Use Cases Management System plugin is a powerful and versatile tool designed to provide an efficient and comprehensive solution for managing product use cases within your WordPress site. This plugin is particularly beneficial for businesses and organizations that need to document and showcase various use cases, solutions, and success stories. It empowers users to create, upload, categorize, and manage detailed use case entries, enhancing the ability to demonstrate the effectiveness and benefits of their products or services.
-Version: 1.1.0
+Version: 1.1.2
 Author: Hardik Kaneria
 Text Domain: thelenders.app
 */

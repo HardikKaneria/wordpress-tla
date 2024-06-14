@@ -22,13 +22,6 @@ jQuery(document).ready(function ($) {
             console.error("Error loading model:", error);
         } finally {
             searchButton.prop('disabled', false).text('Search');
-            // Check if there's a query in the URL and perform the search
-            const urlParams = new URLSearchParams(window.location.search);
-            const query = urlParams.get('q');
-            if (query) {
-                $('#tla-sear-search-term').val(query);
-                handleSearch();
-            }
         }
     }
 
@@ -144,10 +137,6 @@ jQuery(document).ready(function ($) {
             return;
         }
 
-        // Update the URL with the search query without reloading the page
-        const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?query=${encodeURIComponent(searchTerm)}`;
-        window.history.pushState({ path: newUrl }, '', newUrl);
-
         searchButton.prop('disabled', true).text('Searching...');
 
         try {
@@ -177,7 +166,10 @@ jQuery(document).ready(function ($) {
                     }));
 
                 console.log("Top search results:", sortedResult);
-                displayResults(sortedResult);
+                localStorage.setItem(`searchResults_${searchTerm}`, JSON.stringify(sortedResult));
+                localStorage.setItem(`searchTimestamp_${searchTerm}`, Date.now().toString());
+
+                window.location.href = `${window.location.pathname}?q=${searchTerm}`;
             }).catch(error => {
                 console.error("Error processing search:", error);
             }).finally(() => {
@@ -228,6 +220,47 @@ jQuery(document).ready(function ($) {
         return hash.toString();
     }
 
+    /**
+     * Extract query parameters from URL.
+     * 
+     * @param {string} param Parameter name.
+     * @return {string|null} Parameter value.
+     */
+    function getQueryParam(param) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    /**
+     * Perform search based on query parameter in URL.
+     */
+    function performSearchFromURL() {
+        let query = getQueryParam('q');
+        if (query) {
+            $('#tla-sear-search-term').val(query);
+            let cachedResults = localStorage.getItem(`searchResults_${query}`);
+            let cachedTimestamp = localStorage.getItem(`searchTimestamp_${query}`);
+
+            if (cachedResults && cachedTimestamp) {
+                let now = Date.now();
+                if (now - parseInt(cachedTimestamp) < 3600000) { // 1 hour
+                    console.log("Using cached results.");
+                    displayResults(JSON.parse(cachedResults));
+                    // Load model in the background
+                    loadModel();
+                    return;
+                } else {
+                    localStorage.removeItem(`searchResults_${query}`);
+                    localStorage.removeItem(`searchTimestamp_${query}`);
+                }
+            }
+            handleSearch();
+        } else {
+            // Load model in the background if no query is present
+            loadModel();
+        }
+    }
+
     // Handle Enter key press for search input
     $('#tla-sear-search-term').on('keypress', function (e) {
         if (e.which === 13) {
@@ -236,6 +269,6 @@ jQuery(document).ready(function ($) {
     });
     searchButton.on('click', handleSearch);
 
-    // Load the model when the page is ready
-    loadModel();
+    // Perform search from URL or load model when the page is ready
+    performSearchFromURL();
 });
