@@ -1,0 +1,224 @@
+/* assets/css/use-case-search.css */
+
+/* Style for the main search frame */
+.tla-sear-frame14 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Style for the search title */
+.tla-sear-title {
+    text-align: center;
+    color: #275B42;
+    font-size: 36px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+}
+
+/* Style for the search description */
+.tla-sear-description {
+    width: 100%;
+    text-align: center;
+    color: #444B5B;
+    font-size: 18px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+/* Style for the search input field */
+/* .tla-sear-input {
+    width: calc(100% - 198px);
+    max-width: 678px;
+    height: 55px;
+    border: none;
+    outline: none;
+    padding: 0 20px;
+    border-radius: 37px;
+    font-size: 20px;
+    font-family: Open Sans, sans-serif;
+    font-weight: 700;
+    z-index: 2;
+} */
+
+/* Style for the search button */
+/* .tla-sear-button {
+    width: 198px;
+    height: 61px;
+    background: #275B42;
+    color: white;
+    font-size: 20px;
+    font-family: Open Sans, sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 37px;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+} */
+
+/* Style for the search results title */
+.tla-sear-results-title {
+    text-align: center;
+    color: #444B5B;
+    font-size: 16px;
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+}
+
+/* Style for the results container */
+.tla-sear-frame12 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* Style for individual result cards */
+.tla-sear-card {
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 20%;
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the images inside result cards */
+.tla-sear-card img {
+    width: 100%;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+}
+
+/* Style for the title inside result cards */
+.tla-sear-card-title {
+    width: 100%;
+    text-align: center;
+    color: #444B5B;
+    font-size: 18px;
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    padding: 10px 10px 10px 10px;
+}
+.tla-sear-input {
+    width: calc(100% - 198px);
+    max-width: 678px;
+    height: 61px;
+    border: 2px #275B42 solid;
+    padding: 0 20px;
+    border-radius: 37px;
+    font-size: 20px;
+    font-family: Open Sans, sans-serif;
+    font-weight: 700;
+}
+
+.tla-sear-button {
+    width: 198px;
+    height: 61px;
+    background: #275B42;
+    color: white;
+    font-size: 20px;
+    font-family: Open Sans, sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 37px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Responsive styles for screens up to 768px */
+@media (max-width: 768px) {
+    .tla-sear-input {
+        width: calc(100% - 160px);
+        font-size: 18px;
+    }
+
+    .tla-sear-button {
+        width: 160px;
+        font-size: 18px;
+    }
+
+    .tla-sear-card {
+        max-width: 48%;
+    }
+}
+
+/* Responsive styles for screens up to 480px */
+@media (max-width: 480px) {
+    .tla-sear-card {
+        max-width: 100%;
+    }
+
+    .tla-sear-input {
+        width: 100%;
+    }
+
+    .tla-sear-button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .tla-sear-frame12 {
+        gap: 10px;
+    }
+
+    .tla-sear-group {
+
+        flex-direction: column !important;
+
+        align-items: center;
+    }
+}
+
+.tla-sear-group {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tla-sear-results {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tla-sear-frame {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+}
+
+.tla-sear-card a {
+    text-decoration: none !important;
+}

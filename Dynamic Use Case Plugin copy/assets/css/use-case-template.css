@@ -1,0 +1,201 @@
+/* assets/css/use-case-template.css
+
+.UseContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.UseContent {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.ThumbnailImage {
+    width: 100%;
+    max-width: 852px;
+    height: auto;
+}
+
+.UseTitleDis {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 44px;
+}
+
+.UseTitle {
+    text-align: center;
+    color: #275B42;
+    font-size: 36px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.UseDiscription {
+    text-align: center;
+    color: black;
+    font-size: 24px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 300;
+    word-wrap: break-word;
+}
+
+.UseSolution, .UseResult {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.SolutionHead, .Result {
+    text-align: center;
+    color: #275B42;
+    font-size: 24px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+.UseSolutionText, .UseResultText {
+    width: 100%;
+    max-width: 852px;
+    color: #444B5B;
+    font-size: 18px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    line-height: 28px;
+    word-wrap: break-word;
+}
+
+.UseCta {
+    width: 100%;
+    background: #1C1C1C;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 43px;
+    padding: 20px 0;
+}
+
+.OptimizingBrokerPerformance {
+    text-align: center;
+    color: white;
+    font-size: 32px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+.CtaButton {
+    width: 216px;
+    height: 39px;
+    position: relative;
+}
+
+.Rectangle12 {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.CtaText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #275B42;
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .UseContent {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .UseTitle {
+        font-size: 28px;
+    }
+
+    .UseDiscription {
+        font-size: 20px;
+    }
+
+    .SolutionHead, .Result {
+        font-size: 20px;
+    }
+
+    .UseSolutionText, .UseResultText {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .OptimizingBrokerPerformance {
+        font-size: 28px;
+    }
+
+    .CtaButton {
+        width: 180px;
+        height: 35px;
+    }
+
+    .Rectangle12, .CtaText {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .UseContent {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .UseTitle {
+        font-size: 24px;
+    }
+
+    .UseDiscription {
+        font-size: 18px;
+    }
+
+    .SolutionHead, .Result {
+        font-size: 18px;
+    }
+
+    .UseSolutionText, .UseResultText {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .OptimizingBrokerPerformance {
+        font-size: 24px;
+    }
+
+    .CtaButton {
+        width: 160px;
+        height: 30px;
+    }
+
+    .Rectangle12, .CtaText {
+        font-size: 12px;
+    }
+} */
