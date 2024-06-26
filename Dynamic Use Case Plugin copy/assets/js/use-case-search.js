@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
 
     async function fetchSearchResults(searchTerm) {
         console.log("Calling API with search term:", searchTerm);
-        const apiUrl = 'http://100.27.69.159:5000/find_similar';
+        const apiUrl = 'https://search.thelenders.app:5000/find_similar';
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
